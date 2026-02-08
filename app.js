@@ -1,5 +1,4 @@
-import React, { useState } from "https://esm.sh/react@18.2.0";
-import { createRoot } from "https://esm.sh/react-dom@18.2.0/client";
+const { useState, createElement: h } = React;
 
 const NO_PHRASES = [
   "No 💔",
@@ -14,7 +13,6 @@ const NO_PHRASES = [
 function App() {
   const [noClicks, setNoClicks] = useState(0);
   const [isValentine, setIsValentine] = useState(false);
-
   const yesButtonSize = noClicks * 20 + 16;
 
   const firstImg =
@@ -22,7 +20,7 @@ function App() {
   const secondImg =
     "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
 
-  return React.createElement(
+  return h(
     "div",
     {
       style: {
@@ -32,21 +30,16 @@ function App() {
         justifyContent: "center",
         height: "100vh",
         textAlign: "center",
-        fontFamily: "Arial, sans-serif",
       },
     },
     !isValentine
       ? [
-          React.createElement("img", { src: firstImg, key: "img1" }),
-          React.createElement(
-            "h1",
-            { key: "h1" },
-            "Will you be my Valentine? 💘"
-          ),
-          React.createElement(
+          h("img", { src: firstImg, alt: "cute bear", key: "img1" }),
+          h("h1", { key: "t" }, "Will you be my Valentine? 💘"),
+          h(
             "div",
-            { key: "buttons" },
-            React.createElement(
+            { key: "btns" },
+            h(
               "button",
               {
                 onClick: () => setIsValentine(true),
@@ -63,10 +56,10 @@ function App() {
               },
               "Yes"
             ),
-            React.createElement(
+            h(
               "button",
               {
-                onClick: () => setNoClicks(noClicks + 1),
+                onClick: () => setNoClicks((p) => p + 1),
                 style: {
                   margin: "10px",
                   padding: "10px 20px",
@@ -84,8 +77,8 @@ function App() {
           ),
         ]
       : [
-          React.createElement("img", { src: secondImg, key: "img2" }),
-          React.createElement(
+          h("img", { src: secondImg, alt: "kisses bear", key: "img2" }),
+          h(
             "h1",
             { style: { color: "pink" }, key: "yay" },
             "Yay!!! 💖🎉"
@@ -94,6 +87,4 @@ function App() {
   );
 }
 
-createRoot(document.getElementById("root")).render(
-  React.createElement(App)
-);
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
